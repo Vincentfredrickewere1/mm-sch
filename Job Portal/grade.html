@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniPortal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .sidebar .nav-link {
+            color: #333;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+            color: #0d6efd;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+        .sidebar .nav-link.text-danger:hover {
+            background-color: #f8d7da;
+            color: #dc3545 !important;
+        }
+
+        .navbar-custom {
+            background-color: #212529 !important;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-form {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 576px) {
+            .search-form {
+                max-width: 100%;
+                margin: 0.5rem 0;
+            }
+
+            .navbar-icons {
+                gap: 0.5rem !important;
+            }
+
+            .navbar-icons .nav-item {
+                margin: 0 0.25rem !important;
+            }
+
+            .profile-img {
+                width: 32px !important;
+                height: 32px !important;
+            }
+
+            .gear-text {
+                display: none;
+            }
+        }
+
+        @media (min-width: 577px) and (max-width: 991px) {
+            .search-form {
+                max-width: 300px;
+            }
+
+            .navbar-icons .nav-item {
+                margin: 0 0.5rem !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .search-form {
+                max-width: 400px;
+            }
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-img:hover {
+            border-color: #0d6efd;
+            transform: scale(1.05);
+        }
+
+        .nav-icon {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        .nav-icon:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .notification-wrapper {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: #dc3545;
+            color: white;
+            font-size: 0.6rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 50%;
+            border: 2px solid #212529;
+        }
+
+        .navbar-toggler-custom {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-toggler-custom:focus {
+            box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background-color: #2a2f33;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                margin-top: 0.5rem;
+            }
+
+            .navbar-collapse .search-form {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark d-lg-none px-3">
+        <a class="navbar-brand fw-bold" href="#">UniPortal</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+            aria-controls="sidebarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-xl-2 px-0 bg-white border-end">
+                <div class="offcanvas-lg offcanvas-start vh-100 p-3 sidebar" tabindex="-1" id="sidebarMenu"
+                    aria-labelledby="sidebarMenuLabel">
+                    <div class="offcanvas-header border-bottom mb-3 pb-2">
+                        <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel">Menu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                            data-bs-target="#sidebarMenu" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body d-flex flex-column justify-content-between h-100 p-0">
+                        <nav class="nav flex-column gap-1">
+                            <a class="nav-link active" href="index.html">
+                                <span class="icon"><i class="bi bi-grid"></i></span>
+                                <span class="description">Dashboard</span>
+                            </a>
+                            <a class="nav-link" href="course.html">
+                                <span class="icon"><i class="bi bi-mortarboard-fill"></i></span>
+                                <span class="description">Courses</span>
+                            </a>
+                            <a class="nav-link" href="grade.html">
+                                <span class="icon"><i class="bi bi-list-stars"></i></span>
+                                <span class="description">Grades</span>
+                            </a>
+                            <!-- <a class="nav-link" href="#">
+                                <span class="icon"><i class="bi bi-building-check"></i></span>
+                                <span class="description">Attendance</span>
+                            </a>
+                            <a class="nav-link" href="#">
+                                <span class="icon"><i class="bi bi-calendar-check"></i></span>
+                                <span class="description">Timetable</span>
+                            </a>
+                            <a class="nav-link" href="#">
+                                <span class="icon"><i class="bi bi-flag"></i></span>
+                                <span class="description">Complaint</span>
+                            </a> -->
+                            <div class="pt-3 border-top">
+                                <a class="nav-link text-danger" href="login.html">
+                                    <span class="icon"><i class="bi bi-power"></i></span>
+                                    <span class="description">Logout</span>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-xl-10 px-0">
+                <nav class="navbar navbar-expand-lg navbar-custom">
+                    <div class="container-fluid px-2 px-md-4">
+                        <a class="navbar-brand d-lg-none fw-bold text-white" href="#"></a>
+
+                        <button class="navbar-toggler navbar-toggler-custom ms-auto text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#navbarMainContent"
+                            aria-controls="navbarMainContent" aria-expanded="false" aria-label="Toggle navigation"><i class="bi bi-three-dots-vertical"></i>
+                            <!-- <span class="navbar-toggler-icon"></span> -->
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarMainContent">
+                            <form class="search-form d-flex" action="">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Search courses, students..."
+                                        class="form-control form-control-sm form-control-lg">
+                                    <button class="btn btn-primary px-3" type="submit">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="navbar-icons d-flex align-items-center gap-2 gap-md-3 ms-auto mt-2 mt-lg-0">
+                                <div class="nav-item notification-wrapper" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" style="cursor: pointer;">
+                                    <i class="bi bi-bell nav-icon"></i>
+                                    <span class="notification-badge">3</span>
+                                </div>
+
+                                <div class="nav-item">
+                                    <i class="bi bi-gear nav-icon"></i>
+                                    <span class="gear-text text-white-50 d-none d-sm-inline ms-1">Settings</span>
+                                </div>
+
+                                <div class="nav-item dropdown">
+                                    <div class="d-flex align-items-center gap-2" data-bs-toggle="dropdown"
+                                        style="cursor: pointer;">
+                                        <img src="https://ui-avatars.com/api/?name=John+Doe&background=0D6EFD&color=fff&size=40"
+                                            alt="Student Profile" class="profile-img">
+                                        <span class="text-white d-none d-md-inline">John Doe</span>
+                                        <i class="bi bi-chevron-down text-white-50 d-none d-md-inline"
+                                            style="font-size: 0.75rem;"></i>
+                                    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="#">
+                                                <i class="bi bi-person me-2"></i>My Profile
+                                            </a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                                <i class="bi bi-gear me-2"></i>Settings
+                                            </a></li>
+                                        <li><a class="dropdown-item" href="#">
+                                                <i class="bi bi-question-circle me-2"></i>Help
+                                            </a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item text-danger" href="login.html">
+                                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-md-10  ">
+                            <div class="bg-light p-2 border">
+                                <a class="text-decoration-none" href="">Home</a>
+                                <span class="text-muted">/</span>
+                                <a class="text-decoration-none" href="">Students</a>
+                                <span class="text-muted">/</span>
+                                <a class="text-decoration-none" href="">Fredrick Ewere</a>
+                                <span class="text-muted">/</span>
+                                <a class="text-decoration-none" href="">Study Course</a>
+                                <span class="text-muted">/</span>
+                                <a class="text-decoration-none" href="">300 (Year 3)</a>
+                            </div>
+                            <div class="text-center mt-2 bg-secondary text-white rounded p-1">
+                                <small>D199283838 &bull; Courses Validated</small>
+                            </div>
+                            <div class="mt-3 border rounded">
+                                <button class="btn btn-light border m-2"><i
+                                        class="bi bi-file-earmark-pdf text-danger rounded"></i>Download course
+                                    registration slip</button>
+                                <div class="row p-4">
+                                    <div class="col-md-12 col-10">
+                                        <h3>Fredrick Ewere: 300 (Year 3)</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">Session:</span></div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">2025/2026</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">Verdict:</span></div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">not yet</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">Validated by:</span>
+                                        </div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">Lucky Okoh</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">Validated Date:</span>
+                                        </div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">02/04/2026</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">Unrectified GPA:</span>
+                                        </div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">0.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">Transcript
+                                                Remark:</span></div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">1st Semester
+                                                Credits:</span></div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">24</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">2nd Semester
+                                                Credits:</span></div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">24</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-md-4"><span class=" text-black mt">Total Credits:</span>
+                                        </div>
+
+                                        <div class="col-4 col-md-8"><span class="text-black">48</span></div>
+                                    </div>
+                                    <div class="col mt-5">
+                                        <h5>Course Tickets</h5>
+                                        <div class="row">
+                                            <div class="col d-flex justify-content-between">
+                                                <div class="m">
+                                                    <span class="text-black">Show</span>
+                                                    <select class=" rounded">
+                                                        <Option>1000</Option>
+                                                        <Option>500</Option>
+                                                        <Option>100</Option>
+                                                        <Option>50</Option>
+                                                    </select>
+                                                    <span class="text-black">entries</span>
+                                                </div>
+                                                <div class="m-5 m-md-0">
+                                                    <span class="text-black">Search:</span>
+                                                    <input class="rounded" type="text">
+                                                </div>
+
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead class="border-bottom border-black">
+                                                        <tr>
+                                                            <th>Term</th>
+                                                            <th>Code</th>
+                                                            <th>Title</th>
+                                                            <th>Dep</th>
+                                                            <th>Fac</th>
+                                                            <th>Cred.</th>
+                                                            <th>Requ.</th>
+                                                            <th>Score</th>
+                                                            <th>Grade</th>
+                                                            <th>CO</th>
+                                                            <th>OS</th>
+                                                            <th>Auto</th>
+
+                                                        </tr>
+                                                    <tbody class="">
+                                                        <tr class="table-primary">
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1st Sem.</td>
+                                                            <td>COS211</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr class="table-primary">
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr class="table-primary">
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr class="table-primary">
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr class="table-primary">
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1st Sem.</td>
+                                                            <td>GST212</td>
+                                                            <td>Philosophy</td>
+                                                            <td>GST</td>
+                                                            <td>GSU</td>
+                                                            <td>3</td>
+                                                            <td>yes</td>
+                                                            <td>40</td>
+                                                            <td>1</td>
+                                                            <td>yes</td>
+                                                            <td>No</td>
+                                                            <td>yes</td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col d-flex justify-content-between">
+                                                    <span>Showing 1 to 22 entries</span>
+                                                    <span><a href="">Previous</a> <a href="">Next</a></span>
+                                                </div>
+                                                <div class="d-flex flex-column mt-2">
+                                                    <small>CO: Carry-Over course</small>
+                                                    <small>OS: Outstanding course</small>
+                                                    <small>Requ: Required course</small>
+                                                    <small>Auto: Automaticall created course ticket</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <i class="bi bi-bell-fill me-2 text-primary"></i>Notifications
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Your school fees payment is due on 30th June 2024. Please ensure timely
+                        payment to avoid any late fees.
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Grade submitted for Mathematics
+                            <small class="d-block text-muted">2 hours ago</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="bi bi-clock-fill text-warning me-2"></i>
+                            Assignment due tomorrow
+                            <small class="d-block text-muted">5 hours ago</small>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">View All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
